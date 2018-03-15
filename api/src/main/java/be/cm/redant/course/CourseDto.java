@@ -2,17 +2,35 @@ package be.cm.redant.course;
 
 import be.cm.redant.professor.Professor;
 
-public class Course {
+public class CourseDto {
 
     private String courseName;
     private Double studyPoints;
     private String courseDomain;
     private Professor professor;
 
-    public Course(String courseName, Double studyPoints, String courseDomain) {
+    public static CourseDto CourseDto() {
+        return new CourseDto();
+    }
+
+    public CourseDto withCourseName(String courseName) {
         this.courseName = courseName;
+        return this;
+    }
+
+    public CourseDto withStudyPoints(Double studyPoints) {
         this.studyPoints = studyPoints;
+        return this;
+    }
+
+    public CourseDto withCourseDomain(String courseDomain) {
         this.courseDomain = courseDomain;
+        return this;
+    }
+
+    public CourseDto withProfessor(Professor professor) {
+        this.professor = professor;
+        return this;
     }
 
     public String getCourseName() {
@@ -30,23 +48,4 @@ public class Course {
     public Professor getProfessor() {
         return professor;
     }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public void setStudyPoints(Double studyPoints) {
-        this.studyPoints = studyPoints;
-    }
-
-    public void setCourseDomain(String courseDomain) {
-        this.courseDomain = courseDomain;
-    }
-
-    public Course assignProfessor(Professor professor) {
-        this.professor = professor;
-        return this;
-    }
-
-
 }
