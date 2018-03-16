@@ -28,17 +28,37 @@ public class CourseController {
 
     //read
     public Map<Integer, CourseDto> getCourse(String lastNameProfessor) {
-        Map<Integer, Course> originalMap = new HashMap<>(courseService.getCourse(lastNameProfessor));
         Map<Integer, CourseDto> returnMap = new HashMap<>();
 
-        for (Course item:originalMap.values()) {
-            returnMap.put(courseMapper.toDto(item));
+        for (Map.Entry<Integer, Course> item : courseService.getCourse(lastNameProfessor).entrySet()) {
+            returnMap.put(item.getKey(), courseMapper.toDto(item.getValue()));
         }
+        return returnMap;
     }
-
     //read
+    public Map<Integer, CourseDto> getCourse(Double studyPoints, String studyDomain) {
+        Map<Integer, CourseDto> returnMap = new HashMap<>();
 
+        for (Map.Entry<Integer, Course> item : courseService.getCourse(studyPoints,studyDomain).entrySet()) {
+            returnMap.put(item.getKey(), courseMapper.toDto(item.getValue()));
+        }
+        return returnMap;
+    }
+    //read
+    public Map<Integer, CourseDto> getCourse(Double studyPoints) {
+        Map<Integer, CourseDto> returnMap = new HashMap<>();
+
+        for (Map.Entry<Integer, Course> item : courseService.getCourse(studyPoints).entrySet()) {
+            returnMap.put(item.getKey(), courseMapper.toDto(item.getValue()));
+        }
+        return returnMap;
+    }
     //update
-
+    public CourseDto updateCourse(Integer courseId, Course updatedCourse){
+        return courseMapper.toDto(courseService.updateCourse(courseId,updatedCourse));
+    }
     //delete
+    public void deleteCourse(Integer courseId){
+        courseService.deleteCourse(courseId);
+    }
 }
