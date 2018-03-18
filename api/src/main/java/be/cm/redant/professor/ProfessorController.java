@@ -1,12 +1,14 @@
 package be.cm.redant.professor;
 
 import be.cm.redant.ProfessorService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(path = {"/professors"})
@@ -22,11 +24,15 @@ public class ProfessorController {
     }
 
     //create
-    public ProfessorDto createProfessor(Professor professor){
+    @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProfessorDto createProfessor(@RequestBody Professor professor){
         return professorMapper.toDto(professorService.createProfessor(professor));
     }
 
     //get (read)
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public List<ProfessorDto> getProfessor() {
         return professorService.getProfessor().stream()
                 .map(professorMapper::toDto)
@@ -34,17 +40,23 @@ public class ProfessorController {
     }
 
     //get (read)
-    public ProfessorDto getProfessor(Integer professorId) {
+    @GetMapping(path = "/{id}" , produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ProfessorDto getProfessor(@PathVariable("id") Integer professorId) {
         return professorMapper.toDto(professorService.getProfessor(professorId));
     }
 
     //update
-    public ProfessorDto updateProfessor(Integer professorId, Professor updatedProfessor) {
+    @PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ProfessorDto updateProfessor(@PathVariable("id") Integer professorId,@RequestBody Professor updatedProfessor) {
         return professorMapper.toDto(professorService.updateProfessor(professorId,updatedProfessor));
     }
 
     //delete
-    public void deleteProfessor(Integer professorId){
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProfessor(@PathVariable("id") Integer professorId){
         professorService.deleteProfessor(professorId);
     }
 }

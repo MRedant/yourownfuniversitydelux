@@ -1,12 +1,14 @@
 package be.cm.redant.course;
 
 import be.cm.redant.CourseService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(path = "/courses")
@@ -22,12 +24,16 @@ public class CourseController {
     }
 
     //create
-    public CourseDto createCourse(Course course) {
+    @PostMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public CourseDto createCourse(@PathVariable("id") Course course) {
         return courseMapper.toDto(courseService.createCourse(course));
     }
 
     //read
-    public Map<Integer, CourseDto> getCourse(String lastNameProfessor) {
+    @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Map<Integer, CourseDto> getCourse(@PathVariable("id") String lastNameProfessor) {
         Map<Integer, CourseDto> returnMap = new HashMap<>();
 
         for (Map.Entry<Integer, Course> item : courseService.getCourse(lastNameProfessor).entrySet()) {
@@ -35,17 +41,23 @@ public class CourseController {
         }
         return returnMap;
     }
+
     //read
-    public Map<Integer, CourseDto> getCourse(Double studyPoints, String studyDomain) {
+    @GetMapping(consumes =APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Map<Integer, CourseDto> getCourse(@RequestBody Double studyPoints, String studyDomain) {
         Map<Integer, CourseDto> returnMap = new HashMap<>();
 
-        for (Map.Entry<Integer, Course> item : courseService.getCourse(studyPoints,studyDomain).entrySet()) {
+        for (Map.Entry<Integer, Course> item : courseService.getCourse(studyPoints, studyDomain).entrySet()) {
             returnMap.put(item.getKey(), courseMapper.toDto(item.getValue()));
         }
         return returnMap;
     }
+
     //read
-    public Map<Integer, CourseDto> getCourse(Double studyPoints) {
+    @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Map<Integer, CourseDto> getCourse(@PathVariable("id") Double studyPoints) {
         Map<Integer, CourseDto> returnMap = new HashMap<>();
 
         for (Map.Entry<Integer, Course> item : courseService.getCourse(studyPoints).entrySet()) {
@@ -53,12 +65,18 @@ public class CourseController {
         }
         return returnMap;
     }
+
     //update
-    public CourseDto updateCourse(Integer courseId, Course updatedCourse){
-        return courseMapper.toDto(courseService.updateCourse(courseId,updatedCourse));
+    @PutMapping(path = "/{id}" , consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public CourseDto updateCourse(@PathVariable("id") Integer courseId,@RequestBody Course updatedCourse) {
+        return courseMapper.toDto(courseService.updateCourse(courseId, updatedCourse));
     }
+
     //delete
-    public void deleteCourse(Integer courseId){
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCourse(@PathVariable("id") Integer courseId) {
         courseService.deleteCourse(courseId);
     }
 }
