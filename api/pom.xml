@@ -19,10 +19,6 @@
         </dependency>
         <dependency>
             <groupId>be.cm.redant</groupId>
-            <artifactId>jar</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>be.cm.redant</groupId>
             <artifactId>service</artifactId>
         </dependency>
     </dependencies>

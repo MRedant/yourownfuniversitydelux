@@ -30,33 +30,33 @@ public class ProfessorController {
         return professorMapper.toDto(professorService.createProfessor(professor));
     }
 
-    //get (read)
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public List<ProfessorDto> getProfessor() {
-        return professorService.getProfessor().stream()
-                .map(professorMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
-    //get (read)
-    @GetMapping(path = "/{id}" , produces = APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public ProfessorDto getProfessor(@PathVariable("id") Integer professorId) {
-        return professorMapper.toDto(professorService.getProfessor(professorId));
-    }
-
-    //update
-    @PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public ProfessorDto updateProfessor(@PathVariable("id") Integer professorId,@RequestBody Professor updatedProfessor) {
-        return professorMapper.toDto(professorService.updateProfessor(professorId,updatedProfessor));
-    }
-
-    //delete
-    @DeleteMapping(path = "/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProfessor(@PathVariable("id") Integer professorId){
-        professorService.deleteProfessor(professorId);
-    }
+//    //get (read)
+//    @GetMapping(produces = APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<ProfessorDto> getProfessor() {
+//        return professorService.getProfessor().stream()
+//                .map(professorMapper::toDto)
+//                .collect(Collectors.toList());
+//    }
+//
+//    //get (read)
+//    @GetMapping(path = "/{id}" , produces = APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.OK)
+//    public ProfessorDto getProfessor(@PathVariable("id") Integer professorId) {
+//        return professorMapper.toDto(professorService.getProfessor(professorId));
+//    }
+//
+//    //update
+//    @PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.OK)
+//    public ProfessorDto updateProfessor(@PathVariable("id") Integer professorId,@RequestBody Professor updatedProfessor) {
+//        return professorMapper.toDto(professorService.updateProfessor(professorId,updatedProfessor));
+//    }
+//
+//    //delete
+//    @DeleteMapping(path = "/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deleteProfessor(@PathVariable("id") Integer professorId){
+//        professorService.deleteProfessor(professorId);
+//    }
 }

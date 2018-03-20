@@ -24,16 +24,16 @@ public class CourseController {
     }
 
     //create
-    @PostMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/{course}", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public CourseDto createCourse(@PathVariable("id") Course course) {
+    public CourseDto createCourse(@PathVariable("course") Course course) {
         return courseMapper.toDto(courseService.createCourse(course));
     }
 
     //read
-    @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{lastNameProfessor}", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Map<Integer, CourseDto> getCourse(@PathVariable("id") String lastNameProfessor) {
+    public Map<Integer, CourseDto> getCourse(@PathVariable("lastNameProfessor") String lastNameProfessor) {
         Map<Integer, CourseDto> returnMap = new HashMap<>();
 
         for (Map.Entry<Integer, Course> item : courseService.getCourse(lastNameProfessor).entrySet()) {
@@ -55,9 +55,9 @@ public class CourseController {
     }
 
     //read
-    @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{studyPoints}", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Map<Integer, CourseDto> getCourse(@PathVariable("id") Double studyPoints) {
+    public Map<Integer, CourseDto> getCourse(@PathVariable("studyPoints") Double studyPoints) {
         Map<Integer, CourseDto> returnMap = new HashMap<>();
 
         for (Map.Entry<Integer, Course> item : courseService.getCourse(studyPoints).entrySet()) {
@@ -67,16 +67,16 @@ public class CourseController {
     }
 
     //update
-    @PutMapping(path = "/{id}" , consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{courseId}" , consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public CourseDto updateCourse(@PathVariable("id") Integer courseId,@RequestBody Course updatedCourse) {
+    public CourseDto updateCourse(@PathVariable("courseId") Integer courseId,@RequestBody Course updatedCourse) {
         return courseMapper.toDto(courseService.updateCourse(courseId, updatedCourse));
     }
 
     //delete
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/{courseId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCourse(@PathVariable("id") Integer courseId) {
+    public void deleteCourse(@PathVariable("courseId") Integer courseId) {
         courseService.deleteCourse(courseId);
     }
 }
